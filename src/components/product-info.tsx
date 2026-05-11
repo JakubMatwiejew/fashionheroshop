@@ -11,6 +11,7 @@ import { WishlistButton } from "@/components/wishlist-button";
 import { getSellerById } from "@/data/sellers";
 import { Button } from "@/components/ui/button";
 import { PromoteModal } from "@/components/promote-modal";
+import posthog from "posthog-js";
 
 interface ProductInfoProps {
   product: Product;
@@ -179,7 +180,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
       <Button
         variant="default"
         size="lg"
-        onClick={() => setShowPromoteModal(true)}
+        onClick={() => {
+            posthog.capture("promote_button_clicked", { product_id: product.id, product_name: product.name });
+            setShowPromoteModal(true);
+          }}
         className="w-full"
       >
         Promuj produkt
