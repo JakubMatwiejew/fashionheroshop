@@ -9,6 +9,8 @@ import { SizeSelector } from "@/components/size-selector";
 import { useCart } from "@/components/cart-provider";
 import { WishlistButton } from "@/components/wishlist-button";
 import { getSellerById } from "@/data/sellers";
+import { Button } from "@/components/ui/button";
+import { PromoteModal } from "@/components/promote-modal";
 
 interface ProductInfoProps {
   product: Product;
@@ -58,6 +60,7 @@ function getEstimatedDelivery(): string {
 export function ProductInfo({ product }: ProductInfoProps) {
   const [selectedColor, setSelectedColor] = useState<ProductColor>(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [showPromoteModal, setShowPromoteModal] = useState(false);
   const { addItem } = useCart();
 
   const stock = useMemo(() => getStockInfo(product.id), [product.id]);
@@ -171,6 +174,20 @@ export function ProductInfo({ product }: ProductInfoProps) {
       >
         {selectedSize ? "ADD TO CART - " + product.price + " zl" : "SELECT A SIZE"}
       </button>
+
+      {/* Fake door: seller promote CTA */}
+      <Button
+        variant="outline"
+        size="lg"
+        onClick={() => setShowPromoteModal(true)}
+        className="w-full"
+      >
+        Promuj produkt
+      </Button>
+
+      {showPromoteModal && (
+        <PromoteModal onClose={() => setShowPromoteModal(false)} />
+      )}
 
       {/* Shipping info */}
       <div className="flex flex-col gap-2 pt-2 border-t border-border">
