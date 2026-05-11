@@ -177,7 +177,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
       {/* Fake door: seller promote CTA */}
       <Button
-        variant="outline"
+        variant="default"
         size="lg"
         onClick={() => setShowPromoteModal(true)}
         className="w-full"
